@@ -2,21 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Talent Skills DB</title>
+    <link rel="stylesheet" href="styles/styles.css">
     <script src="vendor/jquery/dist/jquery.min.js"></script>
     <script src="assets/scripts/client.min.js"></script>
-    <title>Talent Skills DB</title>
-
 </head>
 <body>
- <form id="skillsForm" method="post">
+
+<button class="showSkills">Show Skills Form and list</button>
+<button class="hideSkills">Hide Skills Form and list</button>
+
+<div id="skillsContainer">
+
+    <form id="skillsForm" method="post">
      <div>
-         <label for="skills">Insert Skills</label>
+         <label for="skills">Add a new skill</label>
          <input type="text" name="skills" id="skills">
          <input type="submit" value="Submit">
 
      </div>
- </form>
-    <div id="someContainer"></div>
+    </form>
 
+    <div id="someContainer">
+    </div>
+
+</div>
 </body>
 </html>

@@ -20,7 +20,25 @@ $(document).ready(function(){
 
        });
    });
+
+//////  code I added later  ///////
+    $('.hideSkills').on('click',function(){
+       $('#skillsContainer').hide();
+    });
+
+    $('.showSkills').on('click',function(){
+        $('#skillsContainer').show();
+        $.ajax({
+            type: "GET",
+            url: "api/getSkills",
+            success: function(data){
+                abilityData = data;
+                appendTasks();
+            }
+        });
+    });
 });
+////////////////////////////////////
 
 function appendTasks(){
     $("#someContainer").empty();
