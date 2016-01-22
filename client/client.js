@@ -2,6 +2,7 @@
  * Created by user on 1/20/16.
  */
 var abilityData = [];
+var returnedData = [];
 
 $(document).ready(function(){
    $("#skillsForm").submit(function(event){
@@ -21,7 +22,7 @@ $(document).ready(function(){
        });
    });
 
-//////  code I added later  ///////
+
     $('.hideSkills').on('click',function(){
        $('#skillsContainer').hide();
     });
@@ -37,18 +38,45 @@ $(document).ready(function(){
             }
         });
     });
+
+    $("#talentForm").submit(function(event){
+        event.preventDefault();
+
+        var talentData = $("#talentForm, .skillsClass").serialize();
+
+        $.ajax({
+            type: "POST",
+            data: talentData,
+            url: "api/addTalent",
+            success: function(data){
+                returnedData = data;
+                appendTalent();
+            }
+
+        });
+    });
 });
-////////////////////////////////////
+
 
 function appendTasks(){
     $("#someContainer").empty();
 
+    $("#someContainer").append("<form class='skillsClass'></form>");
+
     for(var i = 0 ; i < abilityData.length ; i ++){
-        $("#someContainer").append("<div class='skillsClass'></div>");
         var $el = $("#someContainer").children().last();
         $el.data("name", abilityData[i].name);
-        $el.append("<p class='lead'>" + abilityData[i].name + "</p>");
-        //$el.append("<button class='btn btn-danger delete'>X</button>");
+        $el.append("<input type='checkbox' name='idOfSkill' class='lead' value=" + abilityData[i].id + ">" + abilityData[i].name + "</input>");
+    }
+}
+
+function appendTalent(){
+    $("#anotherContainer").empty();
+
+    for(var i = 0 ; i < returnedData.length ; i ++){
+        $("#anotherContainer").append("<div class='talentClass'></div>");
+        var $el = $("#anotherContainer").children().last();
+        $el.append("<p name='talent' class='lead'>" + returnedData[i].first_name + ' ' + returnedData[i].last_name + ' ' + returnedData[i].phone + ' $'+ returnedData[i].low_range + ' $'+ returnedData[i].high_range +"</p>");
     }
 }
 

@@ -51,4 +51,35 @@ router.get('/getSkills', function(request, response){
 });
 ////////////////////////////////////
 
+router.post('/addTalent', function(request, response){
+    var talentList = [];
+
+    var data = {lastname: request.body.last_name, firstname: request.body.first_name, phone: request.body.phone, lowrange: request.body.low_range, highrange: request.body.high_range};
+
+
+
+    pg.connect(connectionString, function(err, client){
+        client.query("INSERT INTO talent(last_name, first_name, phone, low_range, high_range) values($1, $2, $3, $4, $5)", [data.lastname, data.firstname, data.phone, data.lowrange, data.highrange]);
+
+        var query = client.query("SELECT * FROM talent ORDER BY id ASC");
+
+        query.on('row', function(row) {
+            talentList.push(row);
+        });
+
+
+        //skills
+
+
+        query.on('end', function(){
+            client.end();
+            var idForTalent = talentList.id[talentList.length -1];
+            console.log(idForTalent);
+            return response.json(talentList);
+
+        });
+
+    });
+});
+
 module.exports = router;
